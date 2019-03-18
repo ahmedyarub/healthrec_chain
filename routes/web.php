@@ -15,10 +15,13 @@ Route::get('/', function () {
     return view('widgets2');
 });
 
-Route::get('{name?}','AdmireController@showView');
+//Route::get('{name?}','AdmireController@showView');
 
 Route::get('users','AdmireController@index');
 
 Route::post('users','AdmireController@store');
 
 
+Auth::routes();
+
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
