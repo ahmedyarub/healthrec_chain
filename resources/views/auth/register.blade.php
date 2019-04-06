@@ -16,6 +16,18 @@
                         {!! Form::open(['route' => 'register']) !!}
                         <div class="form-group row">
                             <div class="col-sm-12">
+                                <label for="role" class="form-control-label">Role *</label>
+                                <div class="input-group">
+                                    <select id="role" name="role">
+                                        <option>Doctor</option>
+                                        <option>Patient</option>
+                                        <option>Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
                                 <label for="name" class="form-control-label">Username *</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"> <i class="fa fa-user text-primary"></i>
@@ -72,7 +84,8 @@
                                         <i class="fa fa-key text-primary"></i>
                                     </span>
                                     <input type="password" placeholder="Confirm Password" name="password_confirmation"
-                                           id="password_confirmation" class="form-control" value="{{old('password_confirmation')}}"/>
+                                           id="password_confirmation" class="form-control"
+                                           value="{{old('password_confirmation')}}"/>
                                 </div>
                             </div>
                             @if ($errors->has('password_confirmation'))

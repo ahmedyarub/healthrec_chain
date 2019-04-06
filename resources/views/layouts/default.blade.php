@@ -64,10 +64,6 @@ z-index: 999999">
                 <div class="topnav dropdown-menu-right float-xs-right">
                     <div class="btn-group">
                         <div class="notifications no-bg">
-                            <a class="btn btn-default btn-sm messages" data-toggle="dropdown"> <i class="fa fa-envelope fa-1x text-white"></i>
-                                <!--<span class="bg-warning message_tags">4</span>-->
-                                <span class="tag tag-warning">8</span>
-                            </a>
                             <div class="dropdown-menu drop_box_align" role="menu">
                                 <div class="popover-title">You have 8 Messages</div>
                                 <div id="messages">
@@ -155,129 +151,6 @@ z-index: 999999">
                         </div>
                     </div>
                     <div class="btn-group">
-                        <div class="notifications messages no-bg">
-                            <a class="btn btn-default btn-sm" data-toggle="dropdown"> <i class="fa fa-bell text-white"></i>
-                                <!--<span class="bg-danger notification_tags">4</span>-->
-                                <span class="tag tag-danger">9</span>
-                            </a>
-                            <div class="dropdown-menu drop_box_align" role="menu">
-                                <div class="popover-title">You have 9 Notifications</div>
-                                <div id="notifications">
-                                    <div class="data">
-                                        <div class="col-xs-2">
-                                            <img src="{{asset('assets/img/mailbox_imgs/1.jpg')}}" class="message-img avatar" alt="avatar1"></div>
-                                        <div class="col-xs-10 message-data">
-                                            <i class="fa fa-clock-o"></i>
-                                            <strong>Remo</strong>
-                                            sent you an image
-                                            <br>
-                                            <small class="primary_txt">just now.</small>
-                                            <br></div>
-                                    </div>
-                                    <div class="data">
-                                        <div class="col-xs-2">
-                                            <img src="{{asset('assets/img/mailbox_imgs/2.jpg')}}" class="message-img avatar" alt="avatar1"></div>
-                                        <div class="col-xs-10 message-data">
-                                            <i class="fa fa-clock-o"></i>
-                                            <strong>clay</strong>
-                                            business propasals
-                                            <br>
-                                            <small class="primary_txt">20min Back.</small>
-                                            <br></div>
-                                    </div>
-                                    <div class="data">
-                                        <div class="col-xs-2">
-                                            <img src="{{asset('assets/img/mailbox_imgs/3.jpg')}}" class="message-img avatar" alt="avatar1"></div>
-                                        <div class="col-xs-10 message-data">
-                                            <i class="fa fa-clock-o"></i>
-                                            <strong>John</strong>
-                                            meeting at Ritz
-                                            <br>
-                                            <small class="primary_txt">2hrs Back.</small>
-                                            <br></div>
-                                    </div>
-                                    <div class="data">
-                                        <div class="col-xs-2">
-                                            <img src="{{asset('assets/img/mailbox_imgs/6.jpg')}}" class="message-img avatar" alt="avatar1"></div>
-                                        <div class="col-xs-10 message-data">
-                                            <i class="fa fa-clock-o"></i>
-                                            <strong>Luicy</strong>
-                                            Request Invitation
-                                            <br>
-                                            <small class="primary_txt">Yesterday.</small>
-                                            <br></div>
-                                    </div>
-                                    <div class="data">
-                                        <div class="col-xs-2">
-                                            <img src="{{asset('assets/img/mailbox_imgs/1.jpg')}}" class="message-img avatar" alt="avatar1"></div>
-                                        <div class="col-xs-10 message-data">
-                                            <i class="fa fa-clock-o"></i>
-                                            <strong>Remo</strong>
-                                            sent you an image
-                                            <br>
-                                            <small class="primary_txt">just now.</small>
-                                            <br></div>
-                                    </div>
-                                    <div class="data">
-                                        <div class="col-xs-2">
-                                            <img src="{{asset('assets/img/mailbox_imgs/2.jpg')}}" class="message-img avatar" alt="avatar1"></div>
-                                        <div class="col-xs-10 message-data">
-                                            <i class="fa fa-clock-o"></i>
-                                            <strong>clay</strong>
-                                            business propasals
-                                            <br>
-                                            <small class="primary_txt">20min Back.</small>
-                                            <br></div>
-                                    </div>
-                                    <div class="data">
-                                        <div class="col-xs-2">
-                                            <img src="{{asset('assets/img/mailbox_imgs/3.jpg')}}" class="message-img avatar" alt="avatar1"></div>
-                                        <div class="col-xs-10 message-data">
-                                            <i class="fa fa-clock-o"></i>
-                                            <strong>John</strong>
-                                            meeting at Ritz
-                                            <br>
-                                            <small class="primary_txt">2hrs Back.</small>
-                                            <br></div>
-                                    </div>
-                                    <div class="data">
-                                        <div class="col-xs-2">
-                                            <img src="{{asset('assets/img/mailbox_imgs/6.jpg')}}" class="message-img avatar" alt="avatar1"></div>
-                                        <div class="col-xs-10 message-data">
-                                            <i class="fa fa-clock-o"></i>
-                                            <strong>Luicy</strong>
-                                            Request Invitation
-                                            <br>
-                                            <small class="primary_txt">Yesterday.</small>
-                                            <br></div>
-                                    </div>
-                                    <div class="data">
-                                        <div class="col-xs-2">
-                                            <img src="{{asset('assets/img/mailbox_imgs/1.jpg')}}" class="message-img avatar" alt="avatar1"></div>
-                                        <div class="col-xs-10 message-data">
-                                            <i class="fa fa-clock-o"></i>
-                                            <strong>Remo</strong>
-                                            sent you an image
-                                            <br>
-                                            <small class="primary_txt">just now.</small>
-                                            <br></div>
-                                    </div>
-                                </div>
-
-                                <div class="popover-footer">
-                                    <a href="#">View All</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="btn-group">
-                        <a class="btn btn-default btn-sm messages toggle-right">
-                            &nbsp;
-                            <i class="fa fa-cog text-white"></i>
-                            &nbsp;
-                        </a>
-                    </div>
-                    <div class="btn-group">
                         <div class="user-settings no-bg">
                             <button type="button" class="btn btn-default no-bg micheal_btn" data-toggle="dropdown">
                                 <img src="{{asset('assets/img/admin.jpg')}}" class="admin_img2 rounded-circle avatar-img" alt="avatar"> <strong>{{Auth::user()->name}}</strong>
@@ -335,67 +208,27 @@ z-index: 999999">
     <!-- /#top -->
     <div class="wrapper">
     <div id="left">
-        <div class="media user-media bg-dark dker">
-            <div class="user-media-toggleHover">
-                <span class="fa fa-user"></span>
-            </div>
-            <div class="user-wrapper bg-dark">
-                <a class="user-link" href="">
-                    <img class="media-object img-thumbnail user-img rounded-circle admin_img3" alt="User Picture" src="{{asset('assets/img/admin.jpg')}}"><p class="text-white user-info">Welcome {{Auth::user()->name}}</p></a>
-
-                <div class="search_bar col-lg-12">
-                    <div class="input-group">
-                        <input type="search" class="form-control" placeholder="search">
-                        <span class="input-group-btn">
-                                <button class="btn without_border" type="button"><span class="fa fa-search" >
-                                </span></button>
-                            </span>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- #menu -->
+        @if(Auth::user()->role == 'Patient')
+            <ul id="menu" class="bg-blue dker">
+                <li {!! (Request::is('patients')? 'class="active"':"") !!}>
+                    <a href="{{ URL::to('doctors') }} ">
+                        <i class="fa fa-hospital-o"></i>
+                        <span class="link-title">&nbsp;Doctors</span>
+                    </a>
+                </li>
+            </ul>
+        @endif
+        @if(Auth::user()->role == 'Admin')
         <ul id="menu" class="bg-blue dker">
-            <li {!! (Request::is('index')? 'class="active"':"") !!}>
-                <a href="{{ URL::to('index') }} ">
-                    <i class="fa fa-home"></i>
-                    <span class="link-title">&nbsp;Dashboard</span>
-                </a>
-            </li>
-            <li {!! (Request::is('users')|| Request::is('add_user') || Request::is('view_user')|| Request::is('delete_user')? 'class="active"':"")!!}>
-            <a href="#">
+            <li {!! (Request::is('users')? 'class="active"':"") !!}>
+                <a href="{{ URL::to('users') }} ">
                     <i class="fa fa-user"></i>
-                    <span class="link-title">&nbsp; Users</span>
-                    <span class="fa arrow"></span>
+                    <span class="link-title">&nbsp;Users</span>
                 </a>
-                <ul>
-                    <li {!! (Request::is('users')? 'class="active"':"") !!}>
-                        <a href="{{URL::to('users')}} ">
-                            <i class="fa fa-angle-right"></i>
-                            &nbsp; User Grid
-                        </a>
-                    </li>
-                    <li {!! (Request::is('add_user')? 'class="active"':"") !!}>
-                        <a href="{{URL::to('add_user')}} ">
-                            <i class="fa fa-angle-right"></i>
-                            &nbsp; Add User
-                        </a>
-                    </li>
-                    <li {!! (Request::is('view_user')? 'class="active"':"") !!}>
-                        <a href="{{URL::to('view_user')}} ">
-                            <i class="fa fa-angle-right"></i>
-                            &nbsp; User Profile
-                        </a>
-                    </li>
-                    <li {!! (Request::is('delete_user')? 'class="active"':"") !!}>
-                        <a href="{{URL::to('delete_user')}} ">
-                            <i class="fa fa-angle-right"></i>
-                            &nbsp; Delete User
-                        </a>
-                    </li>
-                </ul>
             </li>
         </ul>
+        @endif
         <!-- /#menu -->
     </div>
     <!-- /#left -->

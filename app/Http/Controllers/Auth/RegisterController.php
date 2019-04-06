@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Validator;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Log;
+use Validator;
 
 class RegisterController extends Controller
 {
@@ -49,6 +50,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
+            'role' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
@@ -62,12 +64,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        exec('node ' . env('HYPERLEDGER_PATH') . 'registerUser.js ' . $data['name']);
-
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
+            'role' => $data['role'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        if ($data['role'] == 'Doctor') {
+            $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'registerUser.js ' . $data['name'], $output, $return_var);
+
+            Log::info($result);
+            Log::info($output);
+            Log::info($return_var);
+        } elseif ($data['role'] == 'Patient') {
+            $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'invoke.js createPatient PATIENT' . $user->id . ' ' . $user->id, $output, $return_var);
+
+            Log::info($result);
+            Log::info($output);
+            Log::info($return_var);
+        }
+
+        return $user;
     }
 }

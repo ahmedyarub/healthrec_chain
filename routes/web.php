@@ -21,6 +21,8 @@ Route::get('users','AdmireController@index');
 
 Route::post('users','AdmireController@store');
 
+Route::get('doctors','DoctorsController@index');
+
 
 Auth::routes();
 
