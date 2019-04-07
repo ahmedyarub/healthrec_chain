@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Users
+    Patient Record
     @parent
 @stop
 {{-- page level styles --}}
@@ -24,7 +24,7 @@
             <div class="col-lg-6 col-sm-4">
                 <h4 class="nav_top_align">
                     <i class="fa fa-user"></i>
-                    Users
+                    Patient Records
                 </h4>
             </div>
             <div class="col-lg-6 col-sm-8 col-xs-12">
@@ -35,7 +35,7 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="#">Doctors</a>
+                        <a href="#">Patient Records</a>
                     </li>
                 </ol>
             </div>
@@ -48,47 +48,13 @@
                     User Grid
                 </div>
                 <div class="card-block m-t-35" id="user_body">
-                    <div class="table-toolbar">
-                        <div class="btn-group">
-                            <a href="add_user " id="editable_table_new" class=" btn btn-default">
-                                Add User <i class="fa fa-plus"></i>
-                            </a>
-                        </div>
-                        <div class="btn-group float-xs-right users_grid_tools">
-                            <div class="tools"></div>
-                        </div>
-                    </div>
                     <div>
                         <div>
-                            <table class="table  table-striped table-bordered table-hover dataTable no-footer"
-                                   id="editable_table" role="grid">
-                                <thead>
-                                <tr role="row">
-                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Username</th>
-                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Permission</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($doctors as $doctor)
-                                    <tr role="row" class="even">
-                                        <td class="sorting_1">{{$doctor->name}}</td>
-                                        <td>
-                                            @if(in_array($doctor->name, $authorized))
-                                                {{ Form::open(['action'=>'DoctorsController@deny']) }}
-                                                {{ Form::hidden('id',$doctor->id,['name'=>'id']) }}
-                                                {{ Form::submit('Deny') }}
-                                                {{ Form::close() }}
-                                            @else
-                                                {{ Form::open(['action'=>'DoctorsController@grant']) }}
-                                                {{ Form::hidden('id',$doctor->id,['name'=>'id']) }}
-                                                {{ Form::submit('Grant') }}
-                                                {{ Form::close() }}
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                            {{Form::open(['action'=>'PatientsController@updateRecord'])}}
+                            {{Form::hidden('id', $id)}}
+                            {{Form::textarea('record',$record,['id'=>'record'])}}
+                            {{Form::submit('Update')}}
+                            {{Form::close()}}
                         </div>
                     </div>
                     <!-- END EXAMPLE TABLE PORTLET-->

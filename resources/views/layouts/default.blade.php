@@ -219,6 +219,16 @@ z-index: 999999">
                 </li>
             </ul>
         @endif
+        @if(Auth::user()->role == 'Doctor')
+            <ul id="menu" class="bg-blue dker">
+                <li {!! (Request::is('patients')? 'class="active"':"") !!}>
+                    <a href="{{ URL::to('patients') }} ">
+                        <i class="fa fa-hospital-o"></i>
+                        <span class="link-title">&nbsp;Patients</span>
+                    </a>
+                </li>
+            </ul>
+        @endif
         @if(Auth::user()->role == 'Admin')
         <ul id="menu" class="bg-blue dker">
             <li {!! (Request::is('users')? 'class="active"':"") !!}>

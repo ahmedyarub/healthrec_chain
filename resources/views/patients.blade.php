@@ -35,7 +35,7 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="#">Doctors</a>
+                        <a href="#">Patients</a>
                     </li>
                 </ol>
             </div>
@@ -65,25 +65,16 @@
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Username</th>
-                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Permission</th>
+                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Email</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($doctors as $doctor)
+                                @foreach ($patients as $patient)
                                     <tr role="row" class="even">
-                                        <td class="sorting_1">{{$doctor->name}}</td>
-                                        <td>
-                                            @if(in_array($doctor->name, $authorized))
-                                                {{ Form::open(['action'=>'DoctorsController@deny']) }}
-                                                {{ Form::hidden('id',$doctor->id,['name'=>'id']) }}
-                                                {{ Form::submit('Deny') }}
-                                                {{ Form::close() }}
-                                            @else
-                                                {{ Form::open(['action'=>'DoctorsController@grant']) }}
-                                                {{ Form::hidden('id',$doctor->id,['name'=>'id']) }}
-                                                {{ Form::submit('Grant') }}
-                                                {{ Form::close() }}
-                                            @endif
+                                        <td class="sorting_1"><a
+                                                    href="{{action('PatientsController@getRecord',[$patient->id])}}">{{$patient->name}}</a>
+                                        </td>
+                                        <td>{{$patient->email}}
                                         </td>
                                     </tr>
                                 @endforeach

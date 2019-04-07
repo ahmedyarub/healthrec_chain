@@ -22,7 +22,12 @@ Route::get('users','AdmireController@index');
 Route::post('users','AdmireController@store');
 
 Route::get('doctors','DoctorsController@index');
+Route::post('/doctors/grant','DoctorsController@grant');
+Route::post('/doctors/deny','DoctorsController@deny');
 
+Route::get('patients','PatientsController@index');
+Route::get('/patients/record/{patient_id}','PatientsController@getRecord');
+Route::post('/patients/record','PatientsController@updateRecord');
 
 Auth::routes();
 

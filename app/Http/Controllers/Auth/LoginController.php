@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,6 @@ class LoginController extends Controller
     protected $redirectTo = '/users';
 
 
-
     /**
      * Create a new controller instance.
      *
@@ -46,5 +46,15 @@ class LoginController extends Controller
     {
         $this->performLogout($request);
         return redirect()->action('AdmireController@index');
+    }
+
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        return $this->authenticated($request, $this->guard()->user())
+            ?: redirect(Auth::user()->role == 'Doctor' ? '/patients' : '/doctors');
     }
 }
