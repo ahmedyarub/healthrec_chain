@@ -27,7 +27,7 @@ class PatientsController extends Controller
      */
     public function index()
     {
-        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryAllPatients ' . Auth::user()->name, $output, $return_var);
+        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryAllPatients ' . Auth::user()->name, $output, $return_var);
 
         Log::info($result);
         Log::info($output);
@@ -44,7 +44,7 @@ class PatientsController extends Controller
 
     public function getRecord(Request $request)
     {
-        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryPatient ' . Auth::user()->name . ' PATIENT' . $request->patient_id, $output, $return_var);
+        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryPatient ' . Auth::user()->name . ' PATIENT' . $request->patient_id. ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
@@ -58,7 +58,7 @@ class PatientsController extends Controller
 
     public function updateRecord(Request $request)
     {
-        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'invoke.js updatePatientRecord PATIENT' . $request->id . ' "' . $request->record . '"', $output, $return_var);
+        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'invoke.js updatePatientRecord PATIENT' . $request->id . ' "' . $request->record . '" 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);

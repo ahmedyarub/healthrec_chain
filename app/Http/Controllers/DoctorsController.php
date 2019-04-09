@@ -28,7 +28,7 @@ class DoctorsController extends Controller
     {
         $doctors = User::where('role', 'Doctor')->get();
 
-        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryPatient admin PATIENT' . Auth::user()->id , $output, $return_var);
+        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryPatient admin PATIENT' . Auth::user()->id . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
@@ -41,7 +41,7 @@ class DoctorsController extends Controller
 
     public function grant(Request $request)
     {
-        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node invoke.js grantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id, $output, $return_var);
+        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node invoke.js grantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id. ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
@@ -52,7 +52,7 @@ class DoctorsController extends Controller
 
     public function deny(Request $request)
     {
-        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node invoke.js ungrantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id. ' 2>&1', $output, $return_var);
+        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node invoke.js ungrantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id. ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
