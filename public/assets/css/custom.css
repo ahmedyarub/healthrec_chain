@@ -57,7 +57,7 @@
 #top .navbar {
   padding: 0;
   margin-bottom: 0;
-  background: #4E4C4C; }
+  background: #FFFFFF; }
 
 #top .topnav {
   padding: 0 !important;
@@ -192,7 +192,7 @@
 /* END TOP bar */
 /* 2.Left Menu */
 #left {
-  background-color: #4E4C4C;
+  background-color: #FFFFFF;
   margin-top: -2px; }
 
 .search_bar {
@@ -257,8 +257,8 @@
     margin-right: auto; } }
 
 .admin_img {
-  width: 45px;
-  height: 30px;
+  width: 90px;
+  height: 60px;
   margin-top: -10px; }
 
 .admin_img2 {
@@ -539,7 +539,7 @@
     float: left;
     left: auto;
     height: auto;
-    background-color: #4E4C4C; }
+    background-color: #FFFFFF; }
   .sidebar-left-hidden #left {
     width: 0;
     height: 0;
@@ -963,7 +963,7 @@ body.error .logo h1 {
 
 .user-settings button {
   border: none;
-  color: #fff; }
+  color: #000000; }
 
 .user-settings .dropdown-menu li a span {
   float: left;

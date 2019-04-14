@@ -19,6 +19,17 @@
     <!--End of Page level styles-->
 </head>
 <body>
+<div id="top">
+    <!-- .navbar -->
+    <nav class="navbar navbar-static-top">
+        <div class="container-fluid">
+            <a class="navbar-brand text-xs-center" href="{{ URL::to('login') }} ">
+                <h4 class="text-black"><img src="{{asset('assets/img/healthrec_logo.jpg')}}" class="admin_img" alt="logo">
+                    HealthRec Chain</h4>
+            </a>
+        </div>
+    </nav>
+</div>
 <div class="container wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s">
     <!-- Content -->
     @yield('content')

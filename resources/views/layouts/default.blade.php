@@ -27,8 +27,8 @@
         <nav class="navbar navbar-static-top">
             <div class="container-fluid">
                 <a class="navbar-brand text-xs-center" href="{{ URL::to('index') }} ">
-                    <h4 class="text-white"><img src="{{asset('assets/img/logow.png')}}" class="admin_img" alt="logo">
-                        ADMIRE ADMIN</h4>
+                    <h4 class="text-black"><img src="{{asset('assets/img/healthrec_logo.jpg')}}" class="admin_img" alt="logo">
+                        HealthRec Chain</h4>
                 </a>
                 <div class="menu">
                     <span class="toggle-left" id="menu-toggle">
@@ -145,7 +145,7 @@
                     <div class="btn-group">
                         <div class="user-settings no-bg">
                             <button type="button" class="btn btn-default no-bg micheal_btn" data-toggle="dropdown">
-                                <img src="{{asset('assets/img/admin.jpg')}}"
+                                <img src="{{asset('assets/img/user.jpg')}}"
                                      class="admin_img2 rounded-circle avatar-img" alt="avatar">
                                 <strong>{{Auth::user()->name}}</strong>
                                 <span class="fa fa-sort-down white_bg"></span>
