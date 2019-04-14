@@ -21,7 +21,6 @@
                                     <select id="role" name="role">
                                         <option>Doctor</option>
                                         <option>Patient</option>
-                                        <option>Admin</option>
                                     </select>
                                 </div>
                             </div>

@@ -7,8 +7,6 @@ $(document).ready(function() {
         $('.preloader').fadeOut(1000);
     });
 
-    $('[data-toggle="tooltip"]').tooltip();
-
     // menu js
 
     $('#menu').admireMenu();
