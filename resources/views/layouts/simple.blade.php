@@ -49,6 +49,7 @@
 <!--Page level js-->
 <script type="text/javascript" src="{{asset('assets/js/pages/register.js')}}"></script>
 <!-- end of page level js -->
+@yield('footer_scripts')
 </body>
 
 </html>

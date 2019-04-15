@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Log;
 use Validator;
@@ -23,12 +24,10 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/users';
+    public function redirectTo()
+    {
+        return Auth::user()->role == 'Doctor' ? '/patients' : '/doctors';
+    }
 
     /**
      * Create a new controller instance.
@@ -68,17 +67,18 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'role' => $data['role'],
             'email' => $data['email'],
+            'specialization' => $data['specialization'],
             'password' => bcrypt($data['password']),
         ]);
 
         if ($data['role'] == 'Doctor') {
-            $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'registerUser.js ' . $data['name']. ' 2>&1', $output, $return_var);
+            $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'registerUser.js ' . $data['name'] . ' 2>&1', $output, $return_var);
 
             Log::info($result);
             Log::info($output);
             Log::info($return_var);
         } elseif ($data['role'] == 'Patient') {
-            $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'invoke.js createPatient PATIENT' . $user->id . ' ' . $user->id. ' 2>&1', $output, $return_var);
+            $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'invoke.js createPatient PATIENT' . $user->id . ' ' . $user->id . ' 2>&1', $output, $return_var);
 
             Log::info($result);
             Log::info($output);

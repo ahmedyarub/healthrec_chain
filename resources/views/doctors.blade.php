@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Users
+    Doctors
     @parent
 @stop
 {{-- page level styles --}}
@@ -48,16 +48,6 @@
                     All Doctors Table
                 </div>
                 <div class="card-block m-t-35" id="user_body">
-                    <div class="table-toolbar">
-                        <div class="btn-group">
-                            <a href="add_user " id="editable_table_new" class=" btn btn-default">
-                                Add User <i class="fa fa-plus"></i>
-                            </a>
-                        </div>
-                        <div class="btn-group float-xs-right users_grid_tools">
-                            <div class="tools"></div>
-                        </div>
-                    </div>
                     <div>
                         <div>
                             <table class="table  table-striped table-bordered table-hover dataTable no-footer"
@@ -65,6 +55,7 @@
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Username</th>
+                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Specialization</th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Permission</th>
                                 </tr>
                                 </thead>
@@ -72,6 +63,7 @@
                                 @foreach ($doctors as $doctor)
                                     <tr role="row" class="even">
                                         <td class="sorting_1">{{$doctor->name}}</td>
+                                        <td class="sorting_1">{{$doctor->specialization}}</td>
                                         <td>
                                             @if(in_array($doctor->name, $authorized))
                                                 {{ Form::open(['action'=>'DoctorsController@deny']) }}
