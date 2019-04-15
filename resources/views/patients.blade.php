@@ -24,7 +24,7 @@
             <div class="col-lg-6 col-sm-4">
                 <h4 class="nav_top_align">
                     <i class="fa fa-user"></i>
-                    Users
+                    Patients
                 </h4>
             </div>
             <div class="col-lg-6 col-sm-8 col-xs-12">
@@ -45,7 +45,7 @@
         <div class="inner bg-container">
             <div class="card">
                 <div class="card-header bg-white">
-                    User Grid
+                    Granted Patients
                 </div>
                 <div class="card-block m-t-35" id="user_body">
                     <div class="table-toolbar">

@@ -213,6 +213,12 @@
                             <span class="link-title">&nbsp;Patients</span>
                         </a>
                     </li>
+                    <li {!! (Request::is('doctors/all')? 'class="active"':"") !!}>
+                        <a href="{{ URL::to('doctors/all') }} ">
+                            <i class="fa fa-user"></i>
+                            <span class="link-title">&nbsp;All Doctors</span>
+                        </a>
+                    </li>
                 </ul>
             @endif
             @if(Auth::user()->role == 'Admin')

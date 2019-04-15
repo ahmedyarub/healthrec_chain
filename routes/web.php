@@ -22,6 +22,7 @@ Route::get('users','AdmireController@index');
 Route::post('users','AdmireController@store');
 
 Route::get('doctors','DoctorsController@index');
+Route::get('doctors/all','DoctorsController@indexAll');
 Route::post('/doctors/grant','DoctorsController@grant');
 Route::post('/doctors/deny','DoctorsController@deny');
 

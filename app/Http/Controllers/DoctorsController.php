@@ -39,6 +39,18 @@ class DoctorsController extends Controller
         return view('doctors', compact('doctors', 'authorized'));
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAll()
+    {
+        $doctors = User::where('role', 'Doctor')->get();
+
+        return view('alldoctors', compact('doctors'));
+    }
+
     public function grant(Request $request)
     {
         $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node invoke.js grantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id. ' 2>&1', $output, $return_var);
