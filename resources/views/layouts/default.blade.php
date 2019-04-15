@@ -148,7 +148,6 @@
                                 <img src="{{asset('assets/img/user.jpg')}}"
                                      class="admin_img2 rounded-circle avatar-img" alt="avatar">
                                 <strong>{{Auth::user()->name}}</strong>
-                                <span class="fa fa-sort-down white_bg"></span>
                             </button>
                             <div class="dropdown-menu admire_admin">
                                 <a class="dropdown-item" href="{{ URL::to('logout') }}"><i class="fa fa-sign-out"></i>
