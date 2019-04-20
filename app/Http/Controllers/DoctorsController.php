@@ -34,7 +34,11 @@ class DoctorsController extends Controller
         Log::info($output);
         Log::info($return_var);
 
-        $authorized = explode(',', json_decode(json_decode($output[0]))->access);
+        $accesses = json_decode(json_decode($output[0]));
+        $authorized = [];
+
+        if ($accesses != null)
+            $authorized = explode(',', $accesses->access);
 
         return view('doctors', compact('doctors', 'authorized'));
     }
@@ -53,7 +57,7 @@ class DoctorsController extends Controller
 
     public function grant(Request $request)
     {
-        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node invoke.js grantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id. ' 2>&1', $output, $return_var);
+        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node invoke.js grantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
@@ -64,7 +68,7 @@ class DoctorsController extends Controller
 
     public function deny(Request $request)
     {
-        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node invoke.js ungrantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id. ' 2>&1', $output, $return_var);
+        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node invoke.js ungrantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);

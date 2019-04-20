@@ -27,7 +27,7 @@ class PatientsController extends Controller
      */
     public function index()
     {
-        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryAllPatients ' . Auth::user()->name, $output, $return_var);
+        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryAllPatients ' . Auth::user()->name, $output, $return_var);
 
         Log::info($result);
         Log::info($output);
@@ -44,21 +44,31 @@ class PatientsController extends Controller
 
     public function getRecord(Request $request)
     {
-        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryPatient ' . Auth::user()->name . ' PATIENT' . $request->patient_id. ' 2>&1', $output, $return_var);
+        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryPatient ' . Auth::user()->name . ' PATIENT' . $request->patient_id . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
         Log::info($return_var);
 
         $id = $request->patient_id;
-        $record = json_decode(json_decode($result))->tests;
+        $records = explode('|', json_decode(json_decode($result))->tests);
 
-        return view('patient_record', compact('id', 'record'));
+        if(count($records)!=2){
+            $diagnosevalue = '';
+            $treatmentvalue = '';
+        }else {
+            $diagnosevalue = $records[0];
+            $treatmentvalue = $records[1];
+        }
+
+        $patient = User::find($request->patient_id);
+
+        return view('patient_record', compact('id', 'diagnosevalue', 'treatmentvalue', 'patient'));
     }
 
     public function updateRecord(Request $request)
     {
-        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'invoke.js updatePatientRecord PATIENT' . $request->id . ' "' . $request->record . '" 2>&1', $output, $return_var);
+        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'invoke.js updatePatientRecord PATIENT' . $request->id . ' "' . $request->diagnosevalue . '|' . $request->treatmentvalue . '" 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);

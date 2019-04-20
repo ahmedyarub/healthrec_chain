@@ -45,16 +45,34 @@
         <div class="inner bg-container">
             <div class="card">
                 <div class="card-header bg-white">
-                    User Grid
+                    Patient Records: {{$patient->name}}
+                </div>
+                {{Form::open(['action'=>'PatientsController@updateRecord'])}}
+                {{Form::hidden('id', $id)}}
+                <div class="card-block m-t-35" id="user_body">
+                    <div>
+                        <div>
+                            {{Form::label('diagnose','Diagnose',['id'=>'diagnose'])}}
+                            {{Form::textarea('diagnosevalue',$diagnosevalue,['id'=>'diagnosevalue'])}}
+                        </div>
+                    </div>
+                    <!-- END EXAMPLE TABLE PORTLET-->
                 </div>
                 <div class="card-block m-t-35" id="user_body">
                     <div>
                         <div>
-                            {{Form::open(['action'=>'PatientsController@updateRecord'])}}
-                            {{Form::hidden('id', $id)}}
-                            {{Form::textarea('record',$record,['id'=>'record'])}}
-                            {{Form::submit('Update')}}
-                            {{Form::close()}}
+                            {{Form::label('treatment','Treatment',['id'=>'treatment'])}}
+                            {{Form::textarea('treatmentvalue',$treatmentvalue,['id'=>'treatmentvalue'])}}
+                        </div>
+                    </div>
+                </div>
+                {{Form::submit('Update')}}
+                {{Form::close()}}
+                <div class="card-block m-t-35" id="user_body">
+                    <div>
+                        <div>
+                            Doctor: {{Auth::user()->name}}<br>
+                            Specialization: {{Auth::user()->specialization}}
                         </div>
                     </div>
                     <!-- END EXAMPLE TABLE PORTLET-->

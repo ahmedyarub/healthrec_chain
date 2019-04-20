@@ -67,7 +67,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'role' => $data['role'],
             'email' => $data['email'],
-            'specialization' => $data['specialization'],
+            'specialization' => $data['role'] == 'Doctor'?$data['specialization']:'',
             'password' => bcrypt($data['password']),
         ]);
 
