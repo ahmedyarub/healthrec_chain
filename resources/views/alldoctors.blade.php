@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Users
+    Doctors
     @parent
 @stop
 {{-- page level styles --}}
@@ -45,7 +45,7 @@
         <div class="inner bg-container">
             <div class="card">
                 <div class="card-header bg-white">
-                    User Grid
+                    Doctors Table
                 </div>
                 <div class="card-block m-t-35" id="user_body">
                     <div>
@@ -55,7 +55,8 @@
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Doctor</th>
-                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Specialization</th>
+                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Specialization
+                                    </th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">E-Mail</th>
                                 </tr>
                                 </thead>
@@ -65,6 +66,51 @@
                                         <td class="sorting_1">{{$doctor->name}}</td>
                                         <td class="sorting_1">{{$doctor->specialization}}</td>
                                         <td>{{$doctor->email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        {{Form::open(['action'=>'DoctorsController@sendMessage'])}}
+                                        {{Form::hidden('id',$doctor->id,['id'=>'id'])}}
+                                        {{Form::textarea('message',null,['id'=>'message'])}}
+                                        {{Form::submit('Send')}}
+                                        {{Form::close()}}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END EXAMPLE TABLE PORTLET-->
+                </div>
+            </div>
+        </div>
+        <!-- /.inner -->
+    </div>
+    <div class="outer">
+        <div class="inner bg-container">
+            <div class="card">
+                <div class="card-header bg-white">
+                    Messages Table
+                </div>
+                <div class="card-block m-t-35" id="user_body">
+                    <div>
+                        <div>
+                            <table class="table  table-striped table-bordered table-hover dataTable no-footer"
+                                   id="editable_table" role="grid">
+                                <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Message</th>
+                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">From</th>
+                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">To</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($messages as $message)
+                                    <tr role="row" class="even">
+                                        <td class="sorting_1">{{$message->message}}</td>
+                                        <td class="sorting_1">{{App\User::find($message->from_doctor)->name}}</td>
+                                        <td>{{App\User::find($message->to_doctor)->name}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

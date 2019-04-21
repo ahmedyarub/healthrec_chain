@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Message;
 use App\User;
 use Auth;
 use Illuminate\Http\Request;
@@ -50,9 +51,15 @@ class DoctorsController extends Controller
      */
     public function indexAll()
     {
-        $doctors = User::where('role', 'Doctor')->get();
+        $doctors = User::where('role', 'Doctor')->where('id','!=',Auth::user()->id)->get();
 
-        return view('alldoctors', compact('doctors'));
+        $messages = Message::where('from_doctor', Auth::user()->id)
+            ->orWhere('to_doctor', Auth::user()->id)
+            ->orderBy('created_at')
+            ->get();
+
+
+        return view('alldoctors', compact('doctors', 'messages'));
     }
 
     public function grant(Request $request)
@@ -77,4 +84,18 @@ class DoctorsController extends Controller
         return redirect('/doctors');
 
     }
+
+    public function sendMessage(Request $request)
+    {
+        $message = new Message();
+
+        $message->message = $request->message;
+        $message->from_doctor = Auth::user()->id;
+        $message->to_doctor = $request->id;
+
+        $message->save();
+
+        return redirect('/doctors/all');
+    }
+
 }

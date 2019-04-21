@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>
         @section('title')
-            | Admire
+
         @show
     </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -200,6 +200,14 @@
                         <a href="{{ URL::to('doctors') }} ">
                             <i class="fa fa-hospital-o"></i>
                             <span class="link-title">&nbsp;Doctors</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul id="menu" class="bg-blue dker">
+                    <li {!! (Request::is('/patients/record/*')? 'class="active"':"") !!}>
+                        <a href="{{ URL::to('/patients/record/'.Auth::user()->id) }} ">
+                            <i class="fa fa-hospital-o"></i>
+                            <span class="link-title">&nbsp;Patient Record {{Auth::user()->new_report?"NEW":""}}</span>
                         </a>
                     </li>
                 </ul>

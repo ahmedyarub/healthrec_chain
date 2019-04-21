@@ -44,7 +44,10 @@ class PatientsController extends Controller
 
     public function getRecord(Request $request)
     {
-        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryPatient ' . Auth::user()->name . ' PATIENT' . $request->patient_id . ' 2>&1', $output, $return_var);
+
+        $doctor_name = (Auth::user()->role == "Doctor" ? Auth::user()->name : "admin");
+        $patient_id = (Auth::user()->role == "Doctor" ? $request->patient_id : Auth::user()->id);
+        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryPatient ' . $doctor_name . ' PATIENT' . $patient_id . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
@@ -53,15 +56,20 @@ class PatientsController extends Controller
         $id = $request->patient_id;
         $records = explode('|', json_decode(json_decode($result))->tests);
 
-        if(count($records)!=2){
+        if (count($records) != 2) {
             $diagnosevalue = '';
             $treatmentvalue = '';
-        }else {
+        } else {
             $diagnosevalue = $records[0];
             $treatmentvalue = $records[1];
         }
 
         $patient = User::find($request->patient_id);
+
+        if (Auth::user()->role == "Patient") {
+            $patient->new_report = false;
+            $patient->save();
+        }
 
         return view('patient_record', compact('id', 'diagnosevalue', 'treatmentvalue', 'patient'));
     }
@@ -73,6 +81,10 @@ class PatientsController extends Controller
         Log::info($result);
         Log::info($output);
         Log::info($return_var);
+
+        $patient = User::find($request->id);
+        $patient->new_report = true;
+        $patient->save();
 
         return redirect('/patients/record/' . $request->id);
     }
