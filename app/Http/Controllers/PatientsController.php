@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Log;
@@ -71,7 +72,22 @@ class PatientsController extends Controller
             $patient->save();
         }
 
-        return view('patient_record', compact('id', 'diagnosevalue', 'treatmentvalue', 'patient'));
+
+        $result2 = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js getLedgerHistory PATIENT' . $patient_id . ' 2>&1', $output2, $return_var2);
+
+        Log::info($result2);
+        Log::info($output2);
+        Log::info($return_var2);
+
+        $records_history = collect(json_decode($output2[0]))
+            ->mapWithKeys(function ($item) {
+                return [Carbon::createFromTimestamp($item->Timestamp->seconds->low)->toDateTimeString()
+                => $item->Value->tests];
+                            })->filter(function ($value, $key) {
+                return $value != '';
+            });
+
+        return view('patient_record', compact('id', 'diagnosevalue', 'treatmentvalue', 'patient', 'records_history'));
     }
 
     public function updateRecord(Request $request)

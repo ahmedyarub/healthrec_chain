@@ -53,7 +53,7 @@
                     <div>
                         <div>
                             {{Form::label('diagnose','Diagnose',['id'=>'diagnose'])}}
-                            {{Form::textarea('diagnosevalue',$diagnosevalue,['id'=>'diagnosevalue'])}}
+                            {{Form::textarea('diagnosevalue',$diagnosevalue,['id'=>'diagnosevalue',(Auth::user()->role=="Patient"?'readonly':'')])}}
                         </div>
                     </div>
                     <!-- END EXAMPLE TABLE PORTLET-->
@@ -79,6 +79,40 @@
                     </div>
                 @endif
                 {{Form::close()}}
+            </div>
+        </div>
+        <!-- /.inner -->
+    </div>
+    <div class="outer">
+        <div class="inner bg-container">
+            <div class="card">
+                <div class="card-header bg-white">
+                    Record History
+                </div>
+                <div class="card-block m-t-35" id="user_body">
+                    <div>
+                        <div>
+                            <table class="table  table-striped table-bordered table-hover dataTable no-footer"
+                                   id="editable_table" role="grid">
+                                <thead>
+                                <tr role="row">
+                                    <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Date/Time</th>
+                                    <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Record</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($records_history as $key => $record)
+                                    <tr role="row" class="even">
+                                        <td>{{$key}}</td>
+                                        <td>{{$record}}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END EXAMPLE TABLE PORTLET-->
+                </div>
             </div>
         </div>
         <!-- /.inner -->
