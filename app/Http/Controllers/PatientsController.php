@@ -55,44 +55,53 @@ class PatientsController extends Controller
         Log::info($return_var);
 
         $id = $request->patient_id;
-        $records = explode('|', json_decode(json_decode($result))->tests);
+        $records = json_decode(json_decode($result));
 
-        if (count($records) != 2) {
-            $diagnosevalue = '';
-            $treatmentvalue = '';
-        } else {
-            $diagnosevalue = $records[0];
-            $treatmentvalue = $records[1];
-        }
+        $diagnosevalue = $records->diagnosis;
+        $treatmentvalue = $records->treatment;
 
         $patient = User::find($request->patient_id);
 
         if (Auth::user()->role == "Patient") {
             $patient->new_report = false;
             $patient->save();
+            $records_history = [];
+        } else {
+            $result2 = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js getLedgerHistory PATIENT' . $patient_id . ' 2>&1', $output2, $return_var2);
+
+            Log::info($result2);
+            Log::info($output2);
+            Log::info($return_var2);
+
+            $records_history = collect(json_decode($output2[0]))
+                ->mapWithKeys(function ($item) {
+                    return [Carbon::createFromTimestamp($item->Timestamp->seconds->low)->toDateTimeString()
+                    => [$item->Value->lastupdater, $item->Value->diagnosis,$item->Value->treatment]];
+                })->filter(function ($value, $key) {
+                    return $value[0] != '' && $value[1] != '';
+                });
         }
-
-
-        $result2 = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js getLedgerHistory PATIENT' . $patient_id . ' 2>&1', $output2, $return_var2);
-
-        Log::info($result2);
-        Log::info($output2);
-        Log::info($return_var2);
-
-        $records_history = collect(json_decode($output2[0]))
-            ->mapWithKeys(function ($item) {
-                return [Carbon::createFromTimestamp($item->Timestamp->seconds->low)->toDateTimeString()
-                => $item->Value->tests];
-                            })->filter(function ($value, $key) {
-                return $value != '';
-            });
 
         return view('patient_record', compact('id', 'diagnosevalue', 'treatmentvalue', 'patient', 'records_history'));
     }
 
     public function updateRecord(Request $request)
     {
-        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'invoke.js updatePatientRecord PATIENT' . $request->id . ' "' . $request->diagnosevalue . '|' . $request->treatmentvalue . '" 2>&1', $output, $return_var);
+        $temp1 = tmpfile();
+        fwrite($temp1, $request->diagnosevalue);
+        fflush($temp1);
+        $metaDatas1 = stream_get_meta_data($temp1);
+        $tmpFilename1 = $metaDatas1['uri'];
+
+
+        $temp2 = tmpfile();
+        fwrite($temp2, $request->treatmentvalue);
+        fflush($temp2);
+        $metaDatas2 = stream_get_meta_data($temp2);
+        $tmpFilename2 = $metaDatas2['uri'];
+
+
+        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'invoke.js updatePatientRecord PATIENT' . $request->id . ' ' . Auth::user()->name . ' "' . $tmpFilename1 . '" "' . $tmpFilename2 . '" 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
@@ -101,6 +110,9 @@ class PatientsController extends Controller
         $patient = User::find($request->id);
         $patient->new_report = true;
         $patient->save();
+
+        fclose($temp1);
+        fclose($temp2);
 
         return redirect('/patients/record/' . $request->id);
     }

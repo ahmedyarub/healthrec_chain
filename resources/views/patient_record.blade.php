@@ -62,7 +62,7 @@
                     <div>
                         <div>
                             {{Form::label('treatment','Treatment',['id'=>'treatment'])}}
-                            {{Form::textarea('treatmentvalue',$treatmentvalue,['id'=>'treatmentvalue'])}}
+                            {{Form::textarea('treatmentvalue',$treatmentvalue,['id'=>'treatmentvalue',(Auth::user()->role=="Patient"?'readonly':'')])}}
                         </div>
                     </div>
                 </div>
@@ -83,6 +83,7 @@
         </div>
         <!-- /.inner -->
     </div>
+    @if(Auth::user()->role!="Patient")
     <div class="outer">
         <div class="inner bg-container">
             <div class="card">
@@ -97,14 +98,18 @@
                                 <thead>
                                 <tr role="row">
                                     <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Date/Time</th>
-                                    <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Record</th>
+                                    <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Doctor</th>
+                                    <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Treatment</th>
+                                    <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Diagnosis</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach ($records_history as $key => $record)
                                     <tr role="row" class="even">
                                         <td>{{$key}}</td>
-                                        <td>{{$record}}</td>
+                                        <td>{{$record[0]}}</td>
+                                        <td>{{$record[1]}}</td>
+                                        <td>{{$record[2]}}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -117,6 +122,7 @@
         </div>
         <!-- /.inner -->
     </div>
+    @endif
     <!-- /.outer -->
 @stop
 {{-- page level scripts --}}
