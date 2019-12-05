@@ -54,7 +54,7 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
-        $this->authenticated($request, $this->guard()->user())
+        $this->authenticated($request, $this->guard()->user());
 
         if (Auth::user()->role === 'Doctor' || Auth::user()->role === 'Nurse') {
             return redirect('/patients');

@@ -26,7 +26,7 @@ class RegisterController extends Controller
 
     public function redirectTo()
     {
-        return Auth::user()->role == 'Doctor' ? '/patients' : '/doctors';
+        return Auth::user()->role == 'Doctor' || Auth::user()->role == 'Nurse'? '/patients' : (Auth::user()->role == 'Registration'?'/registration':'/doctors');
     }
 
     /**
@@ -71,7 +71,7 @@ class RegisterController extends Controller
         ]);
 
         chdir(env('HYPERLEDGER_PATH'));
-        $result = exec('node registerUser.js ' . $data['name'] . ' 2>&1', $output, $return_var);
+        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && node registerUser.js ' . $data['name'] . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);

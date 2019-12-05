@@ -66,6 +66,7 @@
                         </div>
                     </div>
                 </div>
+                {{Form::submit('Save')}}
                 {{Form::close()}}
             </div>
         </div>
