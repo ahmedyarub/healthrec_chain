@@ -20,23 +20,9 @@
                                 <div class="input-group">
                                     <select id="role" name="role">
                                         <option>Doctor</option>
+                                        <option>Nurse</option>
+                                        <option>Registration</option>
                                         <option>Patient</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row" id="specializationdiv">
-                            <div class="col-sm-12">
-                                <label for="specialization" class="form-control-label">Specialization *</label>
-                                <div class="input-group">
-                                    <select id="specialization" name="specialization">
-                                        <option>ENT</option>
-                                        <option>dentist</option>
-                                        <option>cardiologist</option>
-                                        <option>dermatologist</option>
-                                        <option>nurse</option>
-                                        <option>radiologist</option>
-                                        <option>surgeon</option>
                                     </select>
                                 </div>
                             </div>
@@ -134,11 +120,7 @@
         $(document).ready(function(){
             $("#role").change(function(){
                 $(this).find("option:selected").each(function(){
-                    if($(this).val() == "Doctor"){
-                        $("#specializationdiv").show();
-                    } else{
-                        $("#specializationdiv").hide();
-                    }
+
                 });
             }).change();
         });

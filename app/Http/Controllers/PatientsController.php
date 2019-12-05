@@ -24,20 +24,21 @@ class PatientsController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryAllPatients ' . Auth::user()->name, $output, $return_var);
+        chdir(env('HYPERLEDGER_PATH'));
+        $result = exec('node query.js queryAllPatients ' . Auth::user()->name, $output, $return_var);
 
         Log::info($result);
         Log::info($output);
         Log::info($return_var);
 
-        $records = new Collection(json_decode(json_decode($result)));
+        $records = new Collection(json_decode($result));
 
         $patients = User::whereIn('id', $records->map(function ($value) {
-            return intval($value->Record->id);
+            return (int)$value->Record->id;
         }))->get();
 
         return view('patients', compact('patients'));
@@ -46,28 +47,30 @@ class PatientsController extends Controller
     public function getRecord(Request $request)
     {
 
-        $doctor_name = (Auth::user()->role == "Doctor" ? Auth::user()->name : "admin");
-        $patient_id = (Auth::user()->role == "Doctor" ? $request->patient_id : Auth::user()->id);
-        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryPatient ' . $doctor_name . ' PATIENT' . $patient_id . ' 2>&1', $output, $return_var);
+        $doctor_name = (Auth::user()->role === "Doctor" ? Auth::user()->name : "admin");
+        $patient_id = (Auth::user()->role === "Doctor" ? $request->patient_id : Auth::user()->id);
+        chdir(env('HYPERLEDGER_PATH'));
+        $result = exec('node query.js queryPatient ' . $doctor_name . ' PATIENT' . $patient_id . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
         Log::info($return_var);
 
         $id = $request->patient_id;
-        $records = json_decode(json_decode($result));
+        $records = json_decode($result);
 
         $diagnosevalue = $records->diagnosis;
         $treatmentvalue = $records->treatment;
 
         $patient = User::find($request->patient_id);
 
-        if (Auth::user()->role == "Patient") {
+        if (Auth::user()->role === "Patient") {
             $patient->new_report = false;
             $patient->save();
             $records_history = [];
         } else {
-            $result2 = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js getLedgerHistory PATIENT' . $patient_id . ' 2>&1', $output2, $return_var2);
+            chdir(env('HYPERLEDGER_PATH'));
+            $result2 = exec('node query.js getLedgerHistory PATIENT' . $patient_id . ' 2>&1', $output2, $return_var2);
 
             Log::info($result2);
             Log::info($output2);
@@ -76,7 +79,7 @@ class PatientsController extends Controller
             $records_history = collect(json_decode($output2[0]))
                 ->mapWithKeys(function ($item) {
                     return [Carbon::createFromTimestamp($item->Timestamp->seconds->low)->toDateTimeString()
-                    => [$item->Value->lastupdater, $item->Value->diagnosis,$item->Value->treatment]];
+                    => [$item->Value->lastupdater, $item->Value->diagnosis, $item->Value->treatment]];
                 })->filter(function ($value, $key) {
                     return $value[0] != '' && $value[1] != '';
                 });
@@ -100,8 +103,8 @@ class PatientsController extends Controller
         $metaDatas2 = stream_get_meta_data($temp2);
         $tmpFilename2 = $metaDatas2['uri'];
 
-
-        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'invoke.js updatePatientRecord PATIENT' . $request->id . ' ' . Auth::user()->name . ' "' . $tmpFilename1 . '" "' . $tmpFilename2 . '" 2>&1', $output, $return_var);
+        chdir(env('HYPERLEDGER_PATH'));
+        $result = exec('node invoke.js updatePatientRecord PATIENT' . $request->id . ' ' . Auth::user()->name . ' "' . $tmpFilename1 . '" "' . $tmpFilename2 . '" 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
@@ -115,5 +118,36 @@ class PatientsController extends Controller
         fclose($temp2);
 
         return redirect('/patients/record/' . $request->id);
+    }
+
+    public function getRegister(Request $request)
+    {
+        chdir(env('HYPERLEDGER_PATH'));
+        $result = exec('node query.js queryAllPatients admin', $output, $return_var);
+
+        Log::info($result);
+        Log::info($output);
+        Log::info($return_var);
+
+        $records = new Collection(json_decode($result));
+
+        $patients = User::where('role', 'Patient')
+            ->whereNotIn('id', $records->map(function ($value) {
+                return (int)$value->Record->id;
+            }))->pluck('name', 'id');
+
+        return view('newregister', compact('patients'));
+    }
+
+    public function updateRegister(Request $request)
+    {
+        chdir(env('HYPERLEDGER_PATH'));
+        $result = exec('node invoke.js createPatient PATIENT' . $request->patient_id . ' ' . $request->patient_id . ' ' . $request->emirates_id . ' ' . $request->date_of_birth . ' ' . $request->place_of_birth . ' ' . $request->gender . ' ' . $request->phone . ' 2>&1', $output, $return_var);
+
+        Log::info($result);
+        Log::info($output);
+        Log::info($return_var);
+
+        return redirect('/registration');
     }
 }

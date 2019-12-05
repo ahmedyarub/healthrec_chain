@@ -27,7 +27,8 @@
         <nav class="navbar navbar-static-top">
             <div class="container-fluid">
                 <a class="navbar-brand text-xs-center" href="{{ URL::to('index') }} ">
-                    <h4 class="text-black"><img src="{{asset('assets/img/healthrec_logo.jpg')}}" class="admin_img" alt="logo">
+                    <h4 class="text-black"><img src="{{asset('assets/img/healthrec_logo.jpg')}}" class="admin_img"
+                                                alt="logo">
                         HealthRec Chain</h4>
                 </a>
                 <div class="menu">
@@ -199,7 +200,7 @@
                     <li {!! (Request::is('doctors')? 'class="active"':"") !!}>
                         <a href="{{ URL::to('doctors') }} ">
                             <i class="fa fa-hospital-o"></i>
-                            <span class="link-title">&nbsp;Doctors</span>
+                            <span class="link-title">&nbsp;Doctors & Nurses</span>
                         </a>
                     </li>
                 </ul>
@@ -212,7 +213,7 @@
                     </li>
                 </ul>
             @endif
-            @if(Auth::user()->role == 'Doctor')
+            @if(Auth::user()->role === 'Doctor'||Auth::user()->role==='Nurse')
                 <ul id="menu" class="bg-blue dker">
                     <li {!! (Request::is('patients')? 'class="active"':"") !!}>
                         <a href="{{ URL::to('patients') }} ">
@@ -228,6 +229,16 @@
                     </li>
                 </ul>
             @endif
+            @if(Auth::user()->role == 'Registration')
+                <ul id="menu" class="bg-blue dker">
+                    <li {!! (Request::is('users')? 'class="active"':"") !!}>
+                        <a href="{{ URL::to('/registration') }} ">
+                            <i class="fa fa-user"></i>
+                            <span class="link-title">&nbsp;Registration</span>
+                        </a>
+                    </li>
+                </ul>
+            @endif
             @if(Auth::user()->role == 'Admin')
                 <ul id="menu" class="bg-blue dker">
                     <li {!! (Request::is('users')? 'class="active"':"") !!}>
@@ -237,7 +248,7 @@
                         </a>
                     </li>
                 </ul>
-        @endif
+            @endif
         <!-- /#menu -->
         </div>
         <!-- /#left -->

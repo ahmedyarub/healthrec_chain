@@ -29,6 +29,8 @@ Route::post('/doctors/deny','DoctorsController@deny');
 
 Route::get('patients','PatientsController@index');
 Route::get('/patients/record/{patient_id}','PatientsController@getRecord');
+Route::get('/registration','PatientsController@getRegister');
+Route::post('/registration','PatientsController@updateRegister');
 Route::post('/patients/record','PatientsController@updateRecord');
 
 Auth::routes();

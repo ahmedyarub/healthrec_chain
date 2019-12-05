@@ -45,7 +45,7 @@
         <div class="inner bg-container">
             <div class="card">
                 <div class="card-header bg-white">
-                    All Doctors Table
+                    All Doctors & Nurses Table
                 </div>
                 <div class="card-block m-t-35" id="user_body">
                     <div>
@@ -55,7 +55,6 @@
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Username</th>
-                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Specialization</th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">Permission</th>
                                 </tr>
                                 </thead>
@@ -63,7 +62,6 @@
                                 @foreach ($doctors as $doctor)
                                     <tr role="row" class="even">
                                         <td class="sorting_1">{{$doctor->name}}</td>
-                                        <td class="sorting_1">{{$doctor->specialization}}</td>
                                         <td>
                                             @if(in_array($doctor->name, $authorized))
                                                 {{ Form::open(['action'=>'DoctorsController@deny']) }}

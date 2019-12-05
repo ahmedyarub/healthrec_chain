@@ -66,18 +66,6 @@
                         </div>
                     </div>
                 </div>
-                @if(Auth::user()->role=="Doctor")
-                    {{Form::submit('Update')}}
-                    <div class="card-block m-t-35" id="user_body">
-                        <div>
-                            <div>
-                                Doctor: {{Auth::user()->name}}<br>
-                                Specialization: {{Auth::user()->specialization}}
-                            </div>
-                        </div>
-                        <!-- END EXAMPLE TABLE PORTLET-->
-                    </div>
-                @endif
                 {{Form::close()}}
             </div>
         </div>

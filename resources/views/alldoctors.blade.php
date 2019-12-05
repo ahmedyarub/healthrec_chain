@@ -24,7 +24,7 @@
             <div class="col-lg-6 col-sm-4">
                 <h4 class="nav_top_align">
                     <i class="fa fa-user"></i>
-                    All Doctors
+                    All Doctors & Nurses
                 </h4>
             </div>
             <div class="col-lg-6 col-sm-8 col-xs-12">
@@ -55,8 +55,6 @@
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Doctor</th>
-                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Specialization
-                                    </th>
                                     <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">E-Mail</th>
                                 </tr>
                                 </thead>
@@ -64,7 +62,6 @@
                                 @foreach ($doctors as $doctor)
                                     <tr role="row" class="even">
                                         <td class="sorting_1">{{$doctor->name}}</td>
-                                        <td class="sorting_1">{{$doctor->specialization}}</td>
                                         <td>{{$doctor->email}}</td>
                                     </tr>
                                     <tr>

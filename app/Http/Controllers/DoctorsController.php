@@ -27,15 +27,16 @@ class DoctorsController extends Controller
      */
     public function index()
     {
-        $doctors = User::where('role', 'Doctor')->get();
+        $doctors = User::where('role', 'Doctor')->orWhere('role','Nurse')->get();
 
-        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'query.js queryPatient admin PATIENT' . Auth::user()->id . ' 2>&1', $output, $return_var);
+        chdir(env('HYPERLEDGER_PATH'));
+        $result = exec('node query.js queryPatient admin PATIENT' . Auth::user()->id . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
         Log::info($return_var);
 
-        $accesses = json_decode(json_decode($output[0]));
+        $accesses = json_decode($output[0]);
         $authorized = [];
 
         if ($accesses != null)
@@ -64,7 +65,8 @@ class DoctorsController extends Controller
 
     public function grant(Request $request)
     {
-        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node invoke.js grantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id . ' 2>&1', $output, $return_var);
+        chdir(env('HYPERLEDGER_PATH'));
+        $result = exec('node invoke.js grantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
@@ -75,7 +77,8 @@ class DoctorsController extends Controller
 
     public function deny(Request $request)
     {
-        $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node invoke.js ungrantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id . ' 2>&1', $output, $return_var);
+        chdir(env('HYPERLEDGER_PATH'));
+        $result = exec('node invoke.js ungrantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);

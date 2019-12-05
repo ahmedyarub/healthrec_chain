@@ -67,23 +67,16 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'role' => $data['role'],
             'email' => $data['email'],
-            'specialization' => $data['role'] == 'Doctor'?$data['specialization']:'',
-            'password' => bcrypt($data['password']),
+            'password' => bcrypt($data['password'])
         ]);
 
-        if ($data['role'] == 'Doctor') {
-            $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'registerUser.js ' . $data['name'] . ' 2>&1', $output, $return_var);
+        chdir(env('HYPERLEDGER_PATH'));
+        $result = exec('node registerUser.js ' . $data['name'] . ' 2>&1', $output, $return_var);
 
-            Log::info($result);
-            Log::info($output);
-            Log::info($return_var);
-        } elseif ($data['role'] == 'Patient') {
-            $result = exec('cd ' . env('HYPERLEDGER_PATH') . ' && node ' . env('HYPERLEDGER_PATH') . 'invoke.js createPatient PATIENT' . $user->id . ' ' . $user->id . ' 2>&1', $output, $return_var);
+        Log::info($result);
+        Log::info($output);
+        Log::info($return_var);
 
-            Log::info($result);
-            Log::info($output);
-            Log::info($return_var);
-        }
 
         return $user;
     }
