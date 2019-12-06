@@ -207,7 +207,7 @@
                     <li {!! (Request::is('/patients/record/*')? 'class="active"':"") !!}>
                         <a href="{{ URL::to('/patients/record/'.Auth::user()->id) }} ">
                             <i class="fa fa-hospital-o"></i>
-                            <span class="link-title">&nbsp;Medical History {{Auth::user()->new_report?"NEW":""}}</span>
+                            <span class="link-title">&nbsp;My Medical File {{Auth::user()->new_report?"NEW":""}}</span>
                         </a>
                     </li>
                 </ul>
