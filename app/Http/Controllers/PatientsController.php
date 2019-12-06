@@ -48,8 +48,8 @@ class PatientsController extends Controller
     public function getRecord(Request $request)
     {
 
-        $doctor_name = (Auth::user()->role === "Doctor" ? Auth::user()->name : "admin");
-        $patient_id = (Auth::user()->role === "Doctor" ? $request->patient_id : Auth::user()->id);
+        $doctor_name = (Auth::user()->role === "Doctor" ||  Auth::user()->role === "Nurse" ? Auth::user()->name : "admin");
+        $patient_id = (Auth::user()->role === "Doctor" ||  Auth::user()->role === "Nurse" ? $request->patient_id : Auth::user()->id);
         chdir(env('HYPERLEDGER_PATH'));
         putenv('LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64');
         $result = exec('node query.js queryPatient ' . $doctor_name . ' PATIENT' . $patient_id . ' 2>&1', $output, $return_var);
@@ -98,7 +98,7 @@ class PatientsController extends Controller
     public function updateRecord(Request $request)
     {
         chdir(env('HYPERLEDGER_PATH'));
-        $result = exec('node invoke.js updatePatientRecord PATIENT' . $request->id . ' ' . Auth::user()->name . ' ' . $request->record_date . ' ' . $request->height . ' ' . $request->weight . ' ' . $request->mass . ' ' . $request->pressure . ' ' . $request->allergies . ' ' . $request->symptoms . ' ' . $request->diagnosis . ' 2>&1', $output, $return_var);
+        $result = exec('node invoke.js updatePatientRecord PATIENT' . $request->id . ' ' . Auth::user()->name . ' "' . $request->record_date . '" "' . $request->height . '" "' . $request->weight . '" "' . $request->mass . '" "' . $request->pressure . '" "' . $request->allergies . '" "' . $request->symptoms . '" "' . $request->diagnosis . '" 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
