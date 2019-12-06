@@ -108,7 +108,9 @@
                         </div>
                     </div>
                 </div>
+                @if(Auth::user()->role!="Patient")
                 {{Form::submit('Save')}}
+                @endif
                 {{Form::close()}}
             </div>
         </div>

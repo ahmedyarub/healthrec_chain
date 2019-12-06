@@ -55,7 +55,7 @@
                             {{Form::label('Patient')}}
                             {{Form::select('patient_id',$patients,null,['id'=>'patient_id'])}}
                             <br>
-                            {{Form::label('Record ID')}}
+                            {{Form::label('File Number')}}
                             {{Form::text('record_id',null,['id'=>'record_id'])}}
                             <br>
                             {{Form::label('Emirates ID')}}
