@@ -24,7 +24,7 @@
     <nav class="navbar navbar-static-top" style="background-color: #4fb7fe;">
         <div class="container-fluid">
             <a class="navbar-brand text-xs-center" href="{{ URL::to('login') }} ">
-                <h4 class="text-black">
+                <h4 class="text-black"><img src="{{asset('assets/img/medicalclinic_logo.jpg')}}" class="admin_img" alt="logo">
                     Medical Clinic+</h4>
             </a>
         </div>
