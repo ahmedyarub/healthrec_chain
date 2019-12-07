@@ -30,11 +30,6 @@
             <div class="col-lg-6 col-sm-8 col-xs-12">
                 <ol class="breadcrumb float-xs-right  nav_breadcrumb_top_align">
                     <li class="breadcrumb-item">
-                        <a href="index">
-                            <i class="fa fa-home" data-pack="default" data-tags=""></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item">
                         <a href="#">Doctors</a>
                     </li>
                 </ol>
@@ -64,15 +59,6 @@
                                         <td class="sorting_1">{{$doctor->name}}</td>
                                         <td>{{$doctor->email}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                        {{Form::open(['action'=>'DoctorsController@sendMessage'])}}
-                                        {{Form::hidden('id',$doctor->id,['id'=>'id'])}}
-                                        {{Form::textarea('message',null,['id'=>'message'])}}
-                                        {{Form::submit('Send')}}
-                                        {{Form::close()}}
-                                        </td>
-                                    </tr>
                                 @endforeach
                                 </tbody>
                             </table>
@@ -87,35 +73,7 @@
     <div class="outer">
         <div class="inner bg-container">
             <div class="card">
-                <div class="card-header bg-white">
-                    Messages Table
-                </div>
-                <div class="card-block m-t-35" id="user_body">
-                    <div>
-                        <div>
-                            <table class="table  table-striped table-bordered table-hover dataTable no-footer"
-                                   id="editable_table" role="grid">
-                                <thead>
-                                <tr role="row">
-                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">Message</th>
-                                    <th class="sorting_asc wid-20" tabindex="0" rowspan="1" colspan="1">From</th>
-                                    <th class="sorting wid-25" tabindex="0" rowspan="1" colspan="1">To</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($messages as $message)
-                                    <tr role="row" class="even">
-                                        <td class="sorting_1">{{$message->message}}</td>
-                                        <td class="sorting_1">{{App\User::find($message->from_doctor)->name}}</td>
-                                        <td>{{App\User::find($message->to_doctor)->name}}</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- END EXAMPLE TABLE PORTLET-->
-                </div>
+
             </div>
         </div>
         <!-- /.inner -->
@@ -130,7 +88,6 @@
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.bootstrap.min.js')}}"></script>
     <script type="text/javascript"
             src="{{asset('assets/vendors/datatables/js/dataTables.responsive.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.buttons.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.colVis.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.html5.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.bootstrap.min.js')}}"></script>

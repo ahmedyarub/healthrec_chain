@@ -16,11 +16,11 @@
                         <form method="POST" action="{{ route('login') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group">
-                                <label for="email" class="form-control-label"> E-mail</label>
+                                <label for="name" class="form-control-label"> Username</label>
                                 <div class="input-group">
                                     <span class="input-group-addon input_email"><i
-                                                class="fa fa-envelope text-primary"></i></span>
-                                    <input type="text" class="form-control  form-control-md" id="email" name="email" placeholder="E-mail">
+                                                class="fa fa-user text-primary"></i></span>
+                                    <input type="text" class="form-control  form-control-md" id="name" name="name" placeholder="Username">
                                 </div>
                             </div>
                             <!--</h3>-->
@@ -40,20 +40,6 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-xs-6">
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input form-control">
-                                        <span class="custom-control-indicator"></span>
-                                        <a class="custom-control-description">Keep me logged in</a>
-                                    </label>
-                                </div>
-                                <div class="col-xs-6 text-xs-right forgot_pwd">
-                                    <a href="forgot_password " class="custom-control-description forgottxt_clr">Forgot password?</a>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label class="form-control-label">Don't you have an Account? </label>
                             <a href='register '><b>Sign Up</b></a>

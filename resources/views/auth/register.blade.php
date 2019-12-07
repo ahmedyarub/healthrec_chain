@@ -60,6 +60,28 @@
                                     </span>
                             @endif
                         </div>
+                        <div class="form-group row" id="departmentdiv">
+                            <div class="col-sm-12">
+                                <label for="department" class="form-control-label">Department *</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-building text-primary"></i>
+                                    </span>
+                                    <select name="department" id="department" class="form-control">
+                                        <option>Cardiology</option>
+                                        <option>Radiology</option>
+                                        <option>Neurology</option>
+                                        <option>Emergency</option>
+                                        <option>Family medicine</option>
+                                    </select>
+                                </div>
+                            </div>
+                            @if ($errors->has('department'))
+                                <span class="text-danger" role="alert">
+                                        <strong>{{ $errors->first('department') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label for="password" class="form-control-label text-sm-right">Password *</label>
@@ -95,7 +117,7 @@
                                     </span>
                             @endif
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row" style="text-align: center">
                             <div class="col-sm-9">
                                 <input type="submit" value="Submit" class="btn btn-primary"/>
                             </div>
@@ -117,10 +139,14 @@
 
 @section('footer_scripts')
     <script>
-        $(document).ready(function(){
-            $("#role").change(function(){
-                $(this).find("option:selected").each(function(){
-
+        $(document).ready(function () {
+            $("#role").change(function () {
+                $(this).find("option:selected").each(function () {
+                    if ($(this).val() === "Doctor" || $(this).val() === "Nurse") {
+                        $("#departmentdiv").show();
+                    } else {
+                        $("#departmentdiv").hide();
+                    }
                 });
             }).change();
         });

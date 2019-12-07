@@ -24,12 +24,11 @@
 <div class="bg-dark" id="wrap">
     <div id="top">
         <!-- .navbar -->
-        <nav class="navbar navbar-static-top">
+        <nav class="navbar navbar-static-top" style="background-color: #4fb7fe;">
             <div class="container-fluid">
                 <a class="navbar-brand text-xs-center" href="{{ URL::to('index') }} ">
-                    <h4 class="text-black"><img src="{{asset('assets/img/healthrec_logo.jpg')}}" class="admin_img"
-                                                alt="logo">
-                        HealthRec Chain</h4>
+                    <h4 class="text-black">
+                        Medical Clinic+</h4>
                 </a>
                 <div class="menu">
                     <span class="toggle-left" id="menu-toggle">
@@ -193,7 +192,7 @@
         <!-- /.head --> </div>
     <!-- /#top -->
     <div class="wrapper">
-        <div id="left">
+        <div id="left" style="background-color: #4fb7fe;">
             <!-- #menu -->
             @if(Auth::user()->role == 'Patient')
                 <ul id="menu" class="bg-blue dker">
@@ -208,7 +207,7 @@
                     <li {!! (Request::is('/patients/record/*')? 'class="active"':"") !!}>
                         <a href="{{ URL::to('/patients/record/'.Auth::user()->id) }} ">
                             <i class="fa fa-hospital-o"></i>
-                            <span class="link-title">&nbsp;Patient Record {{Auth::user()->new_report?"NEW":""}}</span>
+                            <span class="link-title">&nbsp;Medical History {{Auth::user()->new_report?"NEW":""}}</span>
                         </a>
                     </li>
                 </ul>
@@ -248,7 +247,7 @@
                         </a>
                     </li>
                 </ul>
-            @endif
+        @endif
         <!-- /#menu -->
         </div>
         <!-- /#left -->

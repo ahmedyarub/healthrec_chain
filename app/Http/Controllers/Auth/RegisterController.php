@@ -26,7 +26,7 @@ class RegisterController extends Controller
 
     public function redirectTo()
     {
-        return Auth::user()->role == 'Doctor' || Auth::user()->role == 'Nurse'? '/patients' : (Auth::user()->role == 'Registration'?'/registration':'/doctors');
+        return Auth::user()->role == 'Doctor' || Auth::user()->role == 'Nurse' ? '/patients' : (Auth::user()->role == 'Registration' ? '/registration' : '/doctors');
     }
 
     /**
@@ -67,11 +67,13 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'role' => $data['role'],
             'email' => $data['email'],
+            'department' => $data['role'] === 'Doctor' || $data['role'] === 'Nurse' ? $data['department'] : '',
             'password' => bcrypt($data['password'])
         ]);
 
         chdir(env('HYPERLEDGER_PATH'));
-        $result = exec('export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64 && node registerUser.js ' . $data['name'] . ' 2>&1', $output, $return_var);
+        putenv('LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64');
+        $result = exec('node registerUser.js ' . $data['name'] . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);

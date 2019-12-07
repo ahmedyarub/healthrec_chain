@@ -30,11 +30,6 @@
             <div class="col-lg-6 col-sm-8 col-xs-12">
                 <ol class="breadcrumb float-xs-right  nav_breadcrumb_top_align">
                     <li class="breadcrumb-item">
-                        <a href="index">
-                            <i class="fa fa-home" data-pack="default" data-tags=""></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item">
                         <a href="#">Users</a>
                     </li>
                 </ol>
@@ -94,7 +89,6 @@
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.responsive.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.buttons.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.colVis.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.html5.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.bootstrap.min.js')}}"></script>

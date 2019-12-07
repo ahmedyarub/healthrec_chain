@@ -21,11 +21,11 @@
 <body>
 <div id="top">
     <!-- .navbar -->
-    <nav class="navbar navbar-static-top">
+    <nav class="navbar navbar-static-top" style="background-color: #4fb7fe;">
         <div class="container-fluid">
             <a class="navbar-brand text-xs-center" href="{{ URL::to('login') }} ">
-                <h4 class="text-black"><img src="{{asset('assets/img/healthrec_logo.jpg')}}" class="admin_img" alt="logo">
-                    HealthRec Chain</h4>
+                <h4 class="text-black">
+                    Medical Clinic+</h4>
             </a>
         </div>
     </nav>

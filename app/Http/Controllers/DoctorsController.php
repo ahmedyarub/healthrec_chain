@@ -27,20 +27,25 @@ class DoctorsController extends Controller
      */
     public function index()
     {
-        $doctors = User::where('role', 'Doctor')->orWhere('role','Nurse')->get();
-
         chdir(env('HYPERLEDGER_PATH'));
+        putenv('LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64');
         $result = exec('node query.js queryPatient admin PATIENT' . Auth::user()->id . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
         Log::info($return_var);
 
-        $accesses = json_decode($output[0]);
         $authorized = [];
+        $doctors = [];
 
-        if ($accesses != null)
-            $authorized = explode(',', $accesses->access);
+        if (count($output) > 0) {
+            $doctors = User::where('role', 'Doctor')->orWhere('role', 'Nurse')->get();
+
+            $accesses = json_decode($output[0]);
+
+            if ($accesses != null)
+                $authorized = explode(',', $accesses->access);
+        }
 
         return view('doctors', compact('doctors', 'authorized'));
     }
@@ -52,20 +57,15 @@ class DoctorsController extends Controller
      */
     public function indexAll()
     {
-        $doctors = User::where('role', 'Doctor')->where('id','!=',Auth::user()->id)->get();
+        $doctors = User::where('role', 'Doctor')->where('id', '!=', Auth::user()->id)->get();
 
-        $messages = Message::where('from_doctor', Auth::user()->id)
-            ->orWhere('to_doctor', Auth::user()->id)
-            ->orderBy('created_at')
-            ->get();
-
-
-        return view('alldoctors', compact('doctors', 'messages'));
+        return view('alldoctors', compact('doctors'));
     }
 
     public function grant(Request $request)
     {
         chdir(env('HYPERLEDGER_PATH'));
+        putenv('LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64');
         $result = exec('node invoke.js grantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id . ' 2>&1', $output, $return_var);
 
         Log::info($result);
@@ -78,6 +78,7 @@ class DoctorsController extends Controller
     public function deny(Request $request)
     {
         chdir(env('HYPERLEDGER_PATH'));
+        putenv('LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64');
         $result = exec('node invoke.js ungrantDoctor ' . User::find($request->id)->name . ' PATIENT' . Auth::user()->id . ' 2>&1', $output, $return_var);
 
         Log::info($result);

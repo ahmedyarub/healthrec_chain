@@ -55,6 +55,9 @@
                             {{Form::label('Patient')}}
                             {{Form::select('patient_id',$patients,null,['id'=>'patient_id'])}}
                             <br>
+                            {{Form::label('Record ID')}}
+                            {{Form::text('record_id',null,['id'=>'record_id'])}}
+                            <br>
                             {{Form::label('Emirates ID')}}
                             {{Form::text('emirates_id',null,['id'=>'emirates_id'])}}
                             <br>
@@ -91,7 +94,6 @@
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.bootstrap.min.js')}}"></script>
     <script type="text/javascript"
             src="{{asset('assets/vendors/datatables/js/dataTables.responsive.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/dataTables.buttons.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.colVis.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.html5.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/vendors/datatables/js/buttons.bootstrap.min.js')}}"></script>

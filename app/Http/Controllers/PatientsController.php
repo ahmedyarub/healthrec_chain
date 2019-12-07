@@ -29,6 +29,7 @@ class PatientsController extends Controller
     public function index()
     {
         chdir(env('HYPERLEDGER_PATH'));
+        putenv('LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64');
         $result = exec('node query.js queryAllPatients ' . Auth::user()->name, $output, $return_var);
 
         Log::info($result);
@@ -50,6 +51,7 @@ class PatientsController extends Controller
         $doctor_name = (Auth::user()->role === "Doctor" ? Auth::user()->name : "admin");
         $patient_id = (Auth::user()->role === "Doctor" ? $request->patient_id : Auth::user()->id);
         chdir(env('HYPERLEDGER_PATH'));
+        putenv('LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64');
         $result = exec('node query.js queryPatient ' . $doctor_name . ' PATIENT' . $patient_id . ' 2>&1', $output, $return_var);
 
         Log::info($result);
@@ -59,8 +61,14 @@ class PatientsController extends Controller
         $id = $request->patient_id;
         $records = json_decode($result);
 
-        $diagnosevalue = $records->diagnosis;
-        $treatmentvalue = $records->treatment;
+        $record_date = $records->record_date;
+        $height = $records->height;
+        $weight = $records->weight;
+        $mass = $records->mass;
+        $pressure = $records->pressure;
+        $allergies = $records->allergies;
+        $symptoms = $records->symptoms;
+        $diagnosis = $records->diagnosis;
 
         $patient = User::find($request->patient_id);
 
@@ -69,7 +77,6 @@ class PatientsController extends Controller
             $patient->save();
             $records_history = [];
         } else {
-            chdir(env('HYPERLEDGER_PATH'));
             $result2 = exec('node query.js getLedgerHistory PATIENT' . $patient_id . ' 2>&1', $output2, $return_var2);
 
             Log::info($result2);
@@ -79,32 +86,19 @@ class PatientsController extends Controller
             $records_history = collect(json_decode($output2[0]))
                 ->mapWithKeys(function ($item) {
                     return [Carbon::createFromTimestamp($item->Timestamp->seconds->low)->toDateTimeString()
-                    => [$item->Value->lastupdater, $item->Value->diagnosis, $item->Value->treatment]];
+                    => [$item->Value->lastupdater, $item->Value->symptoms, $item->Value->diagnosis]];
                 })->filter(function ($value, $key) {
                     return $value[0] != '' && $value[1] != '';
                 });
         }
 
-        return view('patient_record', compact('id', 'diagnosevalue', 'treatmentvalue', 'patient', 'records_history'));
+        return view('patient_record', compact('patient', 'id', 'record_date', 'height', 'weight', 'mass', 'pressure', 'allergies', 'symptoms', 'diagnosis', 'records_history'));
     }
 
     public function updateRecord(Request $request)
     {
-        $temp1 = tmpfile();
-        fwrite($temp1, $request->diagnosevalue);
-        fflush($temp1);
-        $metaDatas1 = stream_get_meta_data($temp1);
-        $tmpFilename1 = $metaDatas1['uri'];
-
-
-        $temp2 = tmpfile();
-        fwrite($temp2, $request->treatmentvalue);
-        fflush($temp2);
-        $metaDatas2 = stream_get_meta_data($temp2);
-        $tmpFilename2 = $metaDatas2['uri'];
-
         chdir(env('HYPERLEDGER_PATH'));
-        $result = exec('node invoke.js updatePatientRecord PATIENT' . $request->id . ' ' . Auth::user()->name . ' "' . $tmpFilename1 . '" "' . $tmpFilename2 . '" 2>&1', $output, $return_var);
+        $result = exec('node invoke.js updatePatientRecord PATIENT' . $request->id . ' ' . Auth::user()->name . ' ' . $request->record_date . ' ' . $request->height . ' ' . $request->weight . ' ' . $request->mass . ' ' . $request->pressure . ' ' . $request->allergies . ' ' . $request->symptoms . ' ' . $request->diagnosis . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
@@ -114,15 +108,13 @@ class PatientsController extends Controller
         $patient->new_report = true;
         $patient->save();
 
-        fclose($temp1);
-        fclose($temp2);
-
         return redirect('/patients/record/' . $request->id);
     }
 
     public function getRegister(Request $request)
     {
         chdir(env('HYPERLEDGER_PATH'));
+        putenv('LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64');
         $result = exec('node query.js queryAllPatients admin', $output, $return_var);
 
         Log::info($result);
@@ -142,7 +134,8 @@ class PatientsController extends Controller
     public function updateRegister(Request $request)
     {
         chdir(env('HYPERLEDGER_PATH'));
-        $result = exec('node invoke.js createPatient PATIENT' . $request->patient_id . ' ' . $request->patient_id . ' ' . $request->emirates_id . ' ' . $request->date_of_birth . ' ' . $request->place_of_birth . ' ' . $request->gender . ' ' . $request->phone . ' 2>&1', $output, $return_var);
+        putenv('LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/usr/local/lib64:/usr/lib64');
+        $result = exec('node invoke.js createPatient PATIENT' . $request->patient_id . ' ' . $request->patient_id . ' ' . $request->record_id . ' ' . $request->emirates_id . ' ' . $request->date_of_birth . ' ' . $request->place_of_birth . ' ' . $request->gender . ' ' . $request->phone . ' 2>&1', $output, $return_var);
 
         Log::info($result);
         Log::info($output);
