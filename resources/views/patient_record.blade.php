@@ -131,7 +131,7 @@
                                     <thead>
                                     <tr role="row">
                                         <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Date/Time</th>
-                                        <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Treatment</th>
+                                        <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Symptoms</th>
                                         <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Diagnosis</th>
                                     </tr>
                                     </thead>
