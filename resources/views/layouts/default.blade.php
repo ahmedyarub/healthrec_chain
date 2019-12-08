@@ -28,7 +28,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand text-xs-center" href="{{ URL::to('index') }} ">
                     <h4 class="text-black"><img src="{{asset('assets/img/medicalclinic_logo.jpg')}}" class="admin_img" alt="logo">
-                        Medical Clinic+</h4>
+                        Electronic Health Transaction</h4>
                 </a>
                 <div class="menu">
                     <span class="toggle-left" id="menu-toggle">
