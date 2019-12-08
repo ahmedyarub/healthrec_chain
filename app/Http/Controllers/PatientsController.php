@@ -86,9 +86,9 @@ class PatientsController extends Controller
             $records_history = collect(json_decode($output2[0]))
                 ->mapWithKeys(function ($item) {
                     return [Carbon::createFromTimestamp($item->Timestamp->seconds->low)->toDateTimeString()
-                    => [$item->Value->lastupdater, $item->Value->symptoms, $item->Value->diagnosis]];
+                    => [$item->Value->symptoms, $item->Value->diagnosis]];
                 })->filter(function ($value, $key) {
-                    return $value[0] != '' && $value[1] != '';
+                    return $value[0] != '' || $value[1] != '';
                 });
         }
 

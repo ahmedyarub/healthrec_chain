@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Medical History
+    My Medical File
     @parent
 @stop
 {{-- page level styles --}}
@@ -24,13 +24,13 @@
             <div class="col-lg-6 col-sm-4">
                 <h4 class="nav_top_align">
                     <i class="fa fa-user"></i>
-                    Medical History
+                    My Medical File
                 </h4>
             </div>
             <div class="col-lg-6 col-sm-8 col-xs-12">
                 <ol class="breadcrumb float-xs-right  nav_breadcrumb_top_align">
                     <li class="breadcrumb-item">
-                        <a href="#">Medical History</a>
+                        <a href="#">My Medical File</a>
                     </li>
                 </ol>
             </div>
@@ -40,7 +40,7 @@
         <div class="inner bg-container">
             <div class="card">
                 <div class="card-header bg-white">
-                    Medical History: {{$patient->name}}
+                    My Medical File: {{$patient->name}}
                 </div>
                 {{Form::open(['action'=>'PatientsController@updateRecord'])}}
                 {{Form::hidden('id', $id)}}
@@ -114,7 +114,7 @@
         </div>
         <!-- /.inner -->
     </div>
-    @if(Auth::user()->role!="Patient")
+    @if(Auth::user()->role!=="Patient")
         <div class="outer">
             <div class="inner bg-container">
                 <div class="card">
@@ -129,7 +129,6 @@
                                     <thead>
                                     <tr role="row">
                                         <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Date/Time</th>
-                                        <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Doctor</th>
                                         <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Treatment</th>
                                         <th class="wid-20" tabindex="0" rowspan="1" colspan="1">Diagnosis</th>
                                     </tr>
@@ -140,7 +139,6 @@
                                             <td>{{$key}}</td>
                                             <td>{{$record[0]}}</td>
                                             <td>{{$record[1]}}</td>
-                                            <td>{{$record[2]}}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
